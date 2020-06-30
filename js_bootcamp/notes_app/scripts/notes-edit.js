@@ -44,5 +44,4 @@ window.addEventListener('storage', (e) => {
         noteBody.value = note.body
     }
 
-    console.log('some data changed...')
 })
