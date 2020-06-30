@@ -8,13 +8,14 @@ renderNotes(notes, filters)
 
 const addNote = (e) => {
     console.log('Creating a new note...')
+    const uuid = uuidv4()
     notes.push({
-        id: uuidv4(),
+        id: uuid,
         title: '',
         body: ''
     })
-    saveNotes()
-    renderNotes(notes, filters)
+    saveNotes(notes)
+    location.assign('/edit.html#' + uuid)
 }
 
 document.querySelector('#search-text').addEventListener('input', (e) => {

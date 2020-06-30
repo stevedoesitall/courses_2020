@@ -1,20 +1,21 @@
 //Get notes from localStorage
 const getNotes = () => {
     const notesJSON = localStorage.getItem('notes')
-        if (notesJSON !== null) {
-            return JSON.parse(notesJSON)
-        } else {
-            return []
-        }
+    if (notesJSON !== null) {
+        return JSON.parse(notesJSON)
+    } else {
+        return []
+    }
 }
 
 //Remove note from list
-const saveNotes = () => {
+const saveNotes = (notes) => {
     localStorage.setItem('notes', JSON.stringify(notes))
 }
 
 //Remove note from list
 const removeNote = (id) => {
+    console.log(`Removing note ${id}`)
     const noteIndex = notes.findIndex(note => {
         return note.id === id
     })
@@ -27,7 +28,7 @@ const removeNote = (id) => {
 //Generate DOM structure for a note
 const generateDOM = (note) => {
     const noteEl = document.createElement('div')
-    const textEl = document.createElement('span')
+    const textEl = document.createElement('a')
     const button = document.createElement('button')
 
     //Set up the remove note button
@@ -45,6 +46,8 @@ const generateDOM = (note) => {
     } else {
         textEl.textContent = 'Unnamed note'
     }
+
+    textEl.setAttribute('href', '/edit.html#' + note.id)
 
     noteEl.appendChild(textEl)
     return noteEl
