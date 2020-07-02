@@ -9,7 +9,7 @@ let note = notes.find(note => {
     return note.id === noteId
 })
 
-if (note === undefined) {
+if (!note) {
     location.assign('/index.html')
 }
 
@@ -44,7 +44,7 @@ window.addEventListener('storage', (e) => {
             return note.id === noteId
         })
         
-        if (note === undefined) {
+        if (!note) {
             location.assign('/index.html')
         }
         
