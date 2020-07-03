@@ -2,8 +2,11 @@
 const getToDos = () => {
     const toDosJSON = localStorage.getItem('toDos')
 
-    return toDosJSON ? JSON.parse(toDosJSON) : []
-  
+    try {
+        return toDosJSON ? JSON.parse(toDosJSON) : []
+    } catch (e) {
+        return []
+    }
 }
 
 //Save your to-dos

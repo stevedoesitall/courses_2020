@@ -1,3 +1,5 @@
+'use strict'
+
 const toDos = getToDos()
 const filters = {
     searchTerm: '',

@@ -1,8 +1,14 @@
+'use strict'
+
 //Get notes from localStorage
 const getNotes = () => {
     const notesJSON = localStorage.getItem('notes')
 
-    return notesJSON ? JSON.parse(notesJSON) : []
+    try {
+        return notesJSON ? JSON.parse(notesJSON) : []
+    } catch (e) {
+        return []
+    }
 
 }
 

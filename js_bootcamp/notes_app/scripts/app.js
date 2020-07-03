@@ -1,3 +1,5 @@
+'use strict'
+
 let notes = getNotes()
 
 const currentTimestamp = moment().valueOf()
