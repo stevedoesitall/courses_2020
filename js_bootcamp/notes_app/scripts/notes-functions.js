@@ -31,19 +31,10 @@ const removeNote = (id) => {
 
 //Generate DOM structure for a note
 const generateDOM = (note) => {
-    const noteEl = document.createElement('div')
-    const textEl = document.createElement('a')
-    const button = document.createElement('button')
+    const noteEl = document.createElement('a')
+    const textEl = document.createElement('p')
+    const statusEl = document.createElement('p')
 
-    //Set up the remove note button
-    button.textContent = 'x'
-    noteEl.appendChild(button)
-    button.addEventListener('click', () => {
-        console.log('Removing note...', note.id)
-        removeNote(note.id)
-        saveNotes()
-        renderNotes(notes, filters)
-    })
 
     if (note.title.length > 0) {
         textEl.textContent = note.title
@@ -51,9 +42,16 @@ const generateDOM = (note) => {
         textEl.textContent = 'Unnamed note'
     }
 
-    textEl.setAttribute('href', '/edit.html#' + note.id)
-
+    textEl.classList.add('list-item__title')
     noteEl.appendChild(textEl)
+
+    noteEl.setAttribute('href', '/edit.html#' + note.id)
+    noteEl.classList.add('list-item')
+
+    statusEl.textContent = updateDateBlurb(note.updatedAt)
+    statusEl.classList.add('list-item__subtitle')
+    noteEl.appendChild(statusEl)
+
     return noteEl
 }
 
@@ -66,7 +64,7 @@ const sortNotes = (notes, sortBy) => {
             } else if (a.updatedAt < b.updatedAt) {
                 return 1
             } else {
-                0
+                return 0
             }
         })
     }
@@ -78,7 +76,7 @@ const sortNotes = (notes, sortBy) => {
             } else if (a.updatedAt > b.updatedAt) {
                 return 1
             } else {
-                0
+                return 0
             }
         })
     }
@@ -90,7 +88,7 @@ const sortNotes = (notes, sortBy) => {
             } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
                 return 1
             } else {
-                0
+                return 0
             }
         })
     }
@@ -98,17 +96,25 @@ const sortNotes = (notes, sortBy) => {
 
 //Render notes to the DOM
 const renderNotes = (notes, filters) => {
+    const notesEl = document.querySelector('#notes')
     notes = sortNotes(notes, filters.sortBy)
     const filteredNotes = notes.filter(note => {
         return note.title.toLowerCase().includes(filters.searchText.toLowerCase())
     })
 
-    document.querySelector('#notes').innerHTML = ''
+    notesEl.innerHTML = ''
 
-    filteredNotes.forEach(note => {
-        const noteEl = generateDOM(note)
-        document.querySelector('#notes').appendChild(noteEl)
-    })
+    if (filteredNotes.length > 0) {
+        filteredNotes.forEach(note => {
+            const noteEl = generateDOM(note)
+            notesEl.appendChild(noteEl)
+        })
+    } else {
+        const emptyMessage = document.createElement('p')
+        emptyMessage.textContent = 'No notes to show'
+        emptyMessage.classList.add('empty-message')
+        notesEl.appendChild(emptyMessage)
+    }
 }
 
 const updateDateBlurb = (note) => {

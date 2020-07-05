@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/styles/styles.css" rel="stylesheet">
     <title>Hangman</title>
 </head>
 <body>
-    <h1>Hangman</h1>
     <div id="results-container">
-        <p id="result"></p>
+        <p id="puzzle" class="puzzle"></p>
         <p id="guesses"></p>
+        <button id="reset" class="button">Reset Puzzle</button>
     </div>
-    <script src="requests.js"></script>
-    <script src="hangman.js"></script>
-    <script src="app.js"></script>
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/hangman.js"></script>
+    <script src="/scripts/app.js"></script>
 </body>
 </html>

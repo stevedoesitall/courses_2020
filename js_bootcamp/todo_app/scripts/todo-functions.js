@@ -45,10 +45,17 @@ const renderToDos = (toDos, filters) => {
 
     toDosList.appendChild(summary)
 
-    filteredToDos.forEach(toDo => {
-        const p = generateToDoDOM(toDo)
+    if (filteredToDos.length > 0) {
+        filteredToDos.forEach(toDo => {
+            const p = generateToDoDOM(toDo)
+            toDosList.appendChild(p)
+        })
+    } else {
+        const p = document.createElement('p')
+        p.classList.add('empty-message')
+        p.textContent = 'No to-dos to show'
         toDosList.appendChild(p)
-    })
+    }
 }
 
 //Toggle value for to-do
@@ -63,7 +70,8 @@ const toggleTodo = (id) => {
 }
 
 const generateToDoDOM = (toDo) => {
-    const toDoEl = document.createElement('div')
+    const toDoEl = document.createElement('label')
+    const containerEl = document.createElement('div')
     const textEl = document.createElement('span')
 
     //Create checbox and add it to the toDoEl
@@ -71,7 +79,7 @@ const generateToDoDOM = (toDo) => {
 
     checkbox.setAttribute('type', 'checkbox')
     checkbox.checked = toDo.completed
-    toDoEl.appendChild(checkbox)
+    containerEl.appendChild(checkbox)
 
     checkbox.addEventListener('change', () => {
         console.log('Checkbox checked')
@@ -82,9 +90,14 @@ const generateToDoDOM = (toDo) => {
 
     textEl.textContent = toDo.title
 
+    toDoEl.classList.add('list-item')
+    containerEl.classList.add('list-item__container')
+    toDoEl.appendChild(containerEl)
+
     //Create button and append it to the textEl
     const removeButton = document.createElement('button')
-    removeButton.textContent = 'x'
+    removeButton.textContent = 'remove'
+    removeButton.classList.add('button', 'button--text')
     removeButton.addEventListener('click', () => {
         removeToDo(toDo.id)
         saveToDos(toDos)
@@ -93,12 +106,15 @@ const generateToDoDOM = (toDo) => {
 
     textEl.appendChild(removeButton)
     
-    toDoEl.appendChild(textEl)
+    containerEl.appendChild(textEl)
+
     return toDoEl
 }
 
 const generateSummaryDOM = (incompleteItems) => {
     const h2 = document.createElement('h2')
-    h2.textContent = `You have ${incompleteItems.length} to-dos left!`
+    const s = incompleteItems.length === 1 ? '' : 's'
+    h2.textContent = `You have ${incompleteItems.length} to-do${s} left!`
+    h2.classList.add('list-title')
     return h2
 }

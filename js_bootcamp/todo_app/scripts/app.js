@@ -6,31 +6,34 @@ const filters = {
     hideCompleted: false
 }
 
-const toDosList = document.querySelector('#todos-list')
+const toDosList = document.querySelector('#todos')
 
 renderToDos(toDos, filters)
 
-document.querySelector('#filter-todos').addEventListener('input', (e) => {
+document.querySelector('#search-text').addEventListener('input', (e) => {
     filters.searchTerm = e.target.value
     renderToDos(toDos, filters)
 })
 
-document.querySelector('#todo-form').addEventListener('submit', (e) => {
+document.querySelector('#new-todo').addEventListener('submit', (e) => {
     e.preventDefault()
     console.log(e)
-    toDos.push({
-        id: uuidv4(),
-        title: e.target.elements.newToDo.value,
-        completed: false
-    })
+    const title = e.target.elements.newToDo.value.trim()
+    if (title !== '') {
+        toDos.push({
+            id: uuidv4(),
+            title: title,
+            completed: false
+        })
+        
+        saveToDos(toDos)
     
-    saveToDos(toDos)
-
-    renderToDos(toDos, filters)
-    e.target.elements.newToDo.value = ''
+        renderToDos(toDos, filters)
+        e.target.elements.newToDo.value = ''
+    }
 })
 
-document.querySelector('#toggle-todos').addEventListener('change', (e) => {
+document.querySelector('#hide-completed').addEventListener('change', (e) => {
 
     filters.hideCompleted = e.target.checked
 
