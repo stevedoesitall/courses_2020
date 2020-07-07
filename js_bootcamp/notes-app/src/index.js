@@ -1,0 +1,1 @@
+import { loadNotes } from './notes'
