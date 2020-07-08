@@ -1,7 +1,5 @@
 const fs = require('fs')
-
 const yargs = require('yargs')
-
 const notesFunctions = require('./notes')
 
 //Customize yargs version
@@ -49,16 +47,23 @@ yargs.command({
     command: 'list',
     describe: 'listing out all notes',
     handler: () => {
-        console.log('listing out all notes')
+        notesFunctions.listNotes()
     }
 })
 
 //Create remove command
 yargs.command({
-    command: 'read',
-    describe: 'read a note',
-    handler: () => {
-        console.log('reading a note')
+    command: 'read', 
+    describe: 'read a note', 
+    builder: { 
+        title: { 
+            describe: 'Note Title', 
+            demandOption: true, 
+            type: 'string' 
+        } 
+    }, 
+    handler: (argv) => { 
+        notesFunctions.readNote(argv.title) 
     }
 })
 

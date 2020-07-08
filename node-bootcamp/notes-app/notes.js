@@ -18,6 +18,19 @@ const addNote = (title, body) => {
     saveNotes(notes)
 }
 
+debugger
+
+const readNote = (title) => { 
+    const notes = loadNotes() 
+    const note = notes.find(note => note.title === title)
+    if (note) { 
+        console.log(chalk.red(note.title)) 
+        console.log(chalk.blue(note.body)) 
+    } else { 
+        console.log(chalk.red('Danger Will Robinson!')) 
+    }
+}
+
 const loadNotes = () => {
     try {
         const dataBuffer = fs.readFileSync('notes.json')
@@ -43,6 +56,13 @@ const removesNotes = (title) => {
 
 }
 
+const listNotes = () => { 
+    const notes = loadNotes() 
+    notes.forEach(note => { 
+        console.log(chalk.blue(note.title)) 
+    })
+}
+
 const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes)
     fs.writeFileSync('notes.json', dataJSON)
@@ -52,5 +72,7 @@ const saveNotes = (notes) => {
 module.exports = {
     getNotes,
     addNote,
-    removesNotes
+    removesNotes,
+    listNotes, 
+    readNote
 }
