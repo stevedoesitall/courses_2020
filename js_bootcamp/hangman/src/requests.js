@@ -8,6 +8,8 @@ const getPuzzle = async (wordCount) => {
     }
 }
 
+console.log(getPuzzle())
+
 //Old test code.
 // const getCurrentCountry = async () => {
 //     const location = await getLocation()
@@ -31,4 +33,4 @@ const getPuzzle = async (wordCount) => {
 //     }
 // }
 
-export { getPuzzle as default }
+// export { getPuzzle as default }
