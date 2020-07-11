@@ -9,6 +9,7 @@ const getData = async (searchTerm, callback) => {
     messageOne.textContent = 'Loading...'
     messageTwo.textContent = ''
     const url = `http://localhost:3000/weather?address=${searchTerm}`
+
     const response = await fetch(url)
     try {
         if (response.status === 200) {

@@ -38,17 +38,17 @@ app.get('/about', (req, res) => {
 app.get('/help', (req, res) => {
     res.render('help', {
         title: 'Help Page',
-        message: 'This is the help page',
+        message: 'This is the help page.',
         name: 'Steve G'
     })
 })
 
-//res.send() sends  data back to the requester to render a page
+//res.send() sends data back to the requester to render a page; this acts as the client-side API endpoint.
 app.get('/weather', (req, res) => {
     const query = req.query
     if (!query.address) {
         return res.send({
-            error: 'Please provide an address'
+            error: 'Please provide an address.'
         })
     }
 
@@ -79,7 +79,7 @@ app.get('/help/*', (req, res) => {
     res.render('error', {
         title: '404',
         name: 'Steve G',
-        errorMessage: 'Help article not found'
+        errorMessage: 'Help article not found.'
     })
 })
 
@@ -87,7 +87,7 @@ app.get('/products', (req, res) => {
     const query = req.query
     if (!query.search) {
         return res.send({
-            error: 'You must provide a search term'
+            error: 'You must provide a search term.'
         })
     }
 
@@ -102,7 +102,7 @@ app.get('*', (req, res) => {
     res.render('error', {
         title: '404',
         name: 'Steve G',
-        errorMessage: 'Page not found'
+        errorMessage: 'Page not found.'
     })
 })
 
