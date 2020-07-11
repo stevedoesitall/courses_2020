@@ -7,17 +7,22 @@ const messageTwo = document.querySelector('#message-2')
 
 const getData = async (searchTerm, callback) => {
     messageOne.textContent = 'Loading...'
+    messageTwo.textContent = ''
     const url = `http://localhost:3000/weather?address=${searchTerm}`
     const response = await fetch(url)
-    if (response.status === 200) {
-        const data = await response.json()
-        if (!data.error) {
-            callback(undefined, data)
+    try {
+        if (response.status === 200) {
+            const data = await response.json()
+            if (!data.error) {
+                callback(undefined, data)
+            } else {
+                throw new Error('Error: No data')
+            }
         } else {
-            callback('Something went wrong!', undefined)
+            throw new Error('Error: Bad request')
         }
-    } else {
-        callback('Something went wrong!', undefined)
+    } catch (error) {
+        callback(error)
     }
 }
 
