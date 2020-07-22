@@ -12,7 +12,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "hbs": "^4.1.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "nunjucks": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

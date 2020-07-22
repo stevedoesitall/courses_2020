@@ -53,25 +53,21 @@ app.get('/weather', (req, res) => {
         })
     }
 
-    geocode(query.address, (error, { latitude, longitude, location } = {}) => {
-        if (error) {
-            return res.send({
-                error: error
-            })
-        }
-    
-        forecast(latitude, longitude, (error, data) => {
-            if (error) {
-            return res.send({
-                error: error
-                })
-            }
-
+    geocode(query.address, { latitude, longitude, location } = {}).then((response) => {
+        forecast(latitude, longitude).then((data) => {
             res.send({
                 forecast: data,
                 location: location,
                 address: query.address
             })
+        }).catch((error) => {
+            res.send({
+                error: 'Something went wrong with forecast function ' + error
+            })
+        })
+    }).catch((error) => {
+        res.send({
+            error: 'Something went wrong with geocode function ' + error
         })
     })
 })

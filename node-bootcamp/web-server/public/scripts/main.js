@@ -5,40 +5,35 @@ const search = document.querySelector('input')
 const messageOne = document.querySelector('#message-1')
 const messageTwo = document.querySelector('#message-2')
 
-const getData = async (searchTerm, callback) => {
+const getData = async (searchTerm) => {
     messageOne.textContent = 'Loading...'
     messageTwo.textContent = ''
     const url = `/weather?address=${searchTerm}`
 
     const response = await fetch(url)
-    try {
-        if (response.status === 200) {
-            const data = await response.json()
-            if (!data.error) {
-                callback(undefined, data)
-            } else {
-                throw new Error('Error: No data')
-            }
+    if (response.status === 200) {
+        const data = await response.json()
+        if (!data.error) {
+            return data
         } else {
-            throw new Error('Error: Bad request')
+            console.log(data)
+            throw new Error('No data to return')
         }
-    } catch (error) {
-        callback(error)
+    } else {
+        throw new Error('Bad request')
     }
 }
 
 weatherForm.addEventListener('submit', (e) => {
     e.preventDefault()
     if (search.value) {
-        getData(search.value, (error, response) => {
-            if (error) {
-                messageOne.textContent = 'Something went wrong! Please try again later.'
-                console.log(error)
-            } else {
-                console.log(response)
-                messageOne.textContent = ''
-                messageTwo.textContent = `It's ${response.forecast} degrees in ${response.location}`
-            }
+        getData(search.value).then((response) => {
+            console.log(response)
+            messageOne.textContent = ''
+            messageTwo.textContent = `It's ${response.forecast} degrees in ${response.location}`
+        }).catch((error) => {
+            messageOne.textContent = 'Something went wrong! Please try again later.'
+            console.log(error)
         })
     }
 })
